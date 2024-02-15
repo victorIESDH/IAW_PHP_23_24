@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="estilos.css">
+    <title>PIZZERIA RAULINNI</title>
+</head>
+<body>
+    <h1>PIZZERIA RAULINNI</h1>
+    <form action="ProcesarPedidoBBDD.php" method="post">
+        <table>
+            <tr>
+                <td>Nombre del cliente</th>
+                <td><input type="text" id="clientName" name="nombre"></th>
+            </tr>
+
+            <tr>
+                <td>Teléfono</th>
+                <td><input type="text" id="clientPhone" name="telefono"></th>
+            </tr>
+
+            <tr>
+                <td>Dirección</th>
+                <td><input type="text" id="clientAddress" name="direccion"></th>
+            </tr>
+        </table>
+        <br>
+        <table border="1"; border-collapse: collapse;>
+            <tr>
+                <th colspan="4">Entrantes</th>
+             </tr>
+            <tr>
+               <th>Número</th>
+               <th>Producto</th>
+               <th>Precio</th>
+               <th>Seleccionado</th>
+            </tr>
+            <tr>
+               <td>1</td>
+               <td>Nachos Clasicos</td>
+               <td>8,95€</td>
+               <td><input type="checkbox" name="Nachos Clasicos" value="8.95"></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Ensalada Cesar</td>
+                <td>10€</td>
+               <td><input type="checkbox" name="Ensalada Cesar" value="10"></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Combo de alitas</td>
+                <td>15€</td>
+               <td><input type="checkbox" name="Combo de alitas" value="15"></td>
+            
+
+            <tr>
+                <th colspan="4">Pizzas</th>
+            </tr>
+            <tr>
+               <th>Número</th>
+               <th>Producto</th>
+               <th>Precio</th>
+               <th>Seleccionado</th>
+            </tr>
+            <tr>
+               <td>4</td>
+               <td>Pizza carbonara</td>
+               <td>11 €</td>
+               <td><input type="checkbox" name="Pizza carbonara" value="11"></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Pizza ranchera</td>
+                <td>8€</td>
+               <td><input type="checkbox" name="Pizza ranchera" value="8"></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Pizza taco</td>
+                <td>15€</td>
+               <td><input type="checkbox" name="Pizza taco" value="15"></td>
+            
+
+            <tr>
+                <th colspan="4">Entrantes</th>
+            </tr>
+            <tr>
+               <th>Número</th>
+               <th>Producto</th>
+               <th>Precio</th>
+               <th>Seleccionado</th>
+            </tr>
+            <tr>
+               <td>7</td>
+               <td>Tarta trufa</td>
+               <td>4€</td>
+               <td><input type="checkbox" name="Tarta trufa" value="4"></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Helados variados</td>
+                <td>3€</td>
+               <td><input type="checkbox" name="Helados variados" value="3"></td>
+           </table>
+
+            <br>
+        <input type="submit" value="Tramitar Pedido">
+    
+    </form>
+</body>
+</html>
