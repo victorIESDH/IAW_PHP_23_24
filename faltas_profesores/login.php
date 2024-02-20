@@ -53,7 +53,8 @@
         if (!empty($_POST["usuario"]) && !empty($_POST["password"]))
         {
             //validamos credenciales y creamos una sessión en caso afirmativo.
-            if (fValidaAcceso($_POST["usuario"],$_POST["password"]))
+            $perfil_acceso = "";
+            if (fValidaAcceso($_POST["usuario"],$_POST["password"],$perfil_acceso))
             {
                 //echo "<p>Los datos son correctos.</p>";
                 if (isset($_POST['recordar'])) 
@@ -65,6 +66,7 @@
                 echo session_id();
                 $_SESSION["session_id"] = session_id();
 				        $_SESSION["usuario_session"] = $_POST["usuario"];  
+                $_SESSION["perfil_session"] = $perfil_acceso;
                 header("location:principal.php");
                 exit();
             }

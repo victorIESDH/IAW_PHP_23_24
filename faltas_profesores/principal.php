@@ -1,23 +1,17 @@
 <?php
-session_start();
-if (isset($_SESSION["session_id"]))
-{
-    $session_activa = session_id();
-    if ($_SESSION["session_id"] != $session_activa )
-    {
-        header("location:login.php");
-        exit();
-    }
-    else
-    {
-        $usuario_conectado = $_SESSION["usuario_session"];
-    } 
-}
-else
+include ("comunes.php");
+
+if (!fValidaSession()) 
 {
     header("location:login.php");
     exit();
 }
+else
+{
+    //obtenemos el usuario logueado para mostrarlo en la web.
+    $usuario_conectado = $_SESSION["usuario_session"];
+    $perfil_usuario = $_SESSION["perfil_session"];
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,11 +27,11 @@ else
     <!-- ========== CABECERA ========== -->
     <div class="container p-2 my-3 bg-success rounded">
         <div class="row">
-            <div class="col-lg-8 text-white">
+            <div class="col-lg-6 text-white">
                 <h4>Cuadrante de faltas de asistencias</h4>
             </div>
-            <div class="col-lg-4 text-warning">
-                <h5><?php  echo "Usuario conectado: $usuario_conectado" ?></h5>
+            <div class="col-lg-6 text-warning">
+                <h5><?php  echo "Usuario conectado: $usuario_conectado <-> Perfíl:  $perfil_usuario" ?></h5>
             </div>
         </div>
     </div>
@@ -51,11 +45,12 @@ else
                     </div>
                     
                     <div class="d-grid gap-2 col-6 mx-auto">
-                        <a href="cerrarsesion.php" class="btn btn-secondary btn-block" role="button">Cerrar sesión</a>
-                        <a href="cerrarsesion.php" class="btn btn-secondary btn-block" role="button">Cerrar sesión</a>
-                        <a href="cerrarsesion.php" class="btn btn-secondary btn-block" role="button">Cerrar sesión</a>
-                        <a href="cerrarsesion.php" class="btn btn-secondary btn-block" role="button">Cerrar sesión</a>
-                        <a href="cerrarsesion.php" class="btn btn-secondary btn-block" role="button">Cerrar sesión</a>
+                        <?php if ($perfil_usuario == "direccion") { ?> 
+                            <a href="formulario_faltas.php" class="btn btn-secondary btn-block" role="button">Introducir falta de asistencia</a>
+                            <a href="listado_faltas.php" class="btn btn-secondary btn-block" role="button">Modificar falta de asistencia</a>
+                        <?php } ?>
+                        <a href="informe_jornada.php" class="btn btn-secondary btn-block" role="button">Generar informe de faltas jornada</a>
+                        <a href="informe_semanal.php" class="btn btn-secondary btn-block" role="button">Generar informa de faltas semanal</a>
                         <a href="cerrarsesion.php" class="btn btn-warning btn-block" role="button">Cerrar sesión</a>
                     </div>
                 </div>

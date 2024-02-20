@@ -1,23 +1,27 @@
 <?php
 include ("modBBDD.php");
 
-function fValidaAcceso ($user, $pass)
+//valida las credenciales pasadas como parametros y retorna verdadero o falso.
+//En el caso de credenciales válidas, informa el perfil del usuario conectado en el parámetro $perfil.
+function fValidaAcceso ($user, $pass,&$perfil)
 	{
 	//nos conectamos a la bd.
 	$conexionBD = conectarBBDD("cuadrante_profesores"); 	
 	//verificamos si la conexión es correcta y lanzamos la consulta de validación de credenciales.
 	if ($conexionBD) {
-		$cadenaSQL = "SELECT NOMBRE,PASSWORD FROM USUARIOS ";
+		$cadenaSQL = "SELECT NOMBRE,PASSWORD,PERFIL FROM USUARIOS ";
 		$cadenaSQL .= " WHERE NOMBRE = '$user' AND PASSWORD = '$pass'"; 
 		$resultado = Ejecutar($conexionBD,$cadenaSQL,1);
 		if ($resultado)
 		{
 			//consulta correcta.Credenciales válidas.
+			$perfil = $resultado[0]['PERFIL'];
 			return 1;
 		}
 		else
 		{
 			//consulta incorrecta.Credenciales inválidas. No tiene acceso.
+			$perfil = "";
 			return 0;
 	    }
 
@@ -25,16 +29,29 @@ function fValidaAcceso ($user, $pass)
 	  } 
 }
 
-function fValidaSession ()
+function fValidaSession (){
+	//habilitamos la sessión para acceder a los datos de $_SESSION 
+	//para comprobar que el usuario ha validado sus credenciales correctamente.
+	session_start();
+	if (isset($_SESSION["session_id"]))
 	{
+		$session_activa = session_id();
 
-	if (isset($_SESSION['mi_session'])) {
+		if ($_SESSION["session_id"] != $session_activa )
+		{
+			//credenciales no validas.
+			return 0;	
+		}	
+		else
+		{
+			return 1;
 
-		return 1;
-
-	} else {
-
-		return 0;
+		}
+	}
+	else
+	{
+		// no se ha iniciado la session correctamente.
+		return 0;	
 	}
 }
 ?>
