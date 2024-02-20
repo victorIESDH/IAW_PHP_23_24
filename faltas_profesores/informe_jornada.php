@@ -1,6 +1,5 @@
 <?php
 include ("comunes.php");
-$mensaje = "";
 if (!fValidaSession()) 
 {
     header("location:login.php");
@@ -8,21 +7,6 @@ if (!fValidaSession())
 }
 else
 {
-    if (isset($_GET["cod_falta"]))
-    {
-        $conexionBD = conectarBBDD("cuadrante_profesores"); 	
-        //verificamos si la conexión es correcta.
-         if ($conexionBD) 
-         {
-            $cadenaSQL = "DELETE FROM FALTAS WHERE CODIGO = '".$_GET["cod_falta"]."'"; 
-            $resultado = Ejecutar($conexionBD,$cadenaSQL,0);
-            if ($resultado)
-            {
-                $mensaje = "Registro borrado correctamente.";
-            }
-            CerrarConexion($conexionBD);
-         }
-    }
     //obtenemos el usuario logueado para mostrarlo en la web.
     $usuario_conectado = $_SESSION["usuario_session"];
     $perfil_usuario = $_SESSION["perfil_session"];
@@ -31,11 +15,14 @@ else
 	//verificamos si la conexión es correcta.
 	if ($conexionBD) 
     {
-		$cadenaSQL = "SELECT FALTAS.CODIGO,PROFESORES.NOMBRE,FALTAS.FECHA FROM FALTAS,PROFESORES "; 
-        $cadenaSQL .= "WHERE FALTAS.PROFESOR = PROFESORES.CODIGO";
-		
-        $faltas = Ejecutar($conexionBD,$cadenaSQL,1);
-		if (!$faltas)
+		$dia = DiaSemana();
+        $cadenaSQL = "SELECT HORARIO.DIA,HORARIO.HORA,HORARIO.GRUPO,HORARIO.AULA,PROFESORES.NOMBRE "; 
+        $cadenaSQL .= "FROM HORARIO, FALTAS, PROFESORES WHERE FALTAS.PROFESOR = HORARIO.PROFESOR AND " ;
+        $cadenaSQL .= "FALTAS.PROFESOR = PROFESORES.CODIGO AND FALTAS.FECHA = CURDATE() AND HORARIO.DIA = '".$dia."' "; 
+        $cadenaSQL .= "ORDER BY HORARIO.HORA,HORARIO.GRUPO,PROFESORES.NOMBRE ";
+
+        $informe = Ejecutar($conexionBD,$cadenaSQL,1);
+		if (!$informe)
 		{
 			echo "Error inesperado al acceder a la BD.";
 	    }
@@ -71,32 +58,29 @@ else
             <div class="col-lg-8">
                 <div class="shadow p-3 mb-3 bg-white rounded">
                     <div class="text-center">
-                        <h3> Mantenimiento de faltas de asistencias</h3>
+                        <h3> Informe de faltas de asistencias para la jornada</h3>
                     </div>
                     <table class="table table-hover table-striped table-warning">
                         <thead>
                             <tr>
-                                <th scope="col">Código</th>
-                                <th scope="col">Profesor</th>
-                                <th scope="col">Fecha falta de asistencia</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
+                                <th scope="col">Hora</th>
+                                <th scope="col">Grupo</th>
+                                <th scope="col">Aula</th>
+                                <th scope="col">Profesor</th>                                
                             </tr>
                         </thead>
                         <tbody>
                              <!--bloque PHP para cargar el select con los datos de la BD. -->
-                             <?php foreach($faltas as $registro){ ?>
+                             <?php foreach($informe as $registro){ ?>
 							<tr>
-								<td><?php echo $registro['CODIGO'] ?></td>
-								<td><?php echo $registro['NOMBRE'] ?></td>
-								<td><?php echo $registro['FECHA'] ?></td>
-								<td><a class="btn btn-outline-primary" href="<?php echo "modificar_falta.php?cod_falta=" . $registro['CODIGO']?>">Editar</a></td>
-								<td><a class="btn btn-outline-primary" href="<?php echo "listado_faltas.php?cod_falta=" . $registro['CODIGO']?>">Eliminar</a></td>
+								<td><?php echo $registro['HORA'] ?></td>
+								<td><?php echo $registro['GRUPO'] ?></td>
+								<td><?php echo $registro['AULA'] ?></td>
+                                <td><?php echo $registro['NOMBRE'] ?></td>
 							</tr>
 							<?php } ?>                           
                         </tbody>
-                    </table>
-                    <?php  echo $mensaje ?>
+                    </table>                    
                     <div class="d-grid gap-2 col-6 mx-auto my-5">
                         <a href="principal.php" class="btn btn-secondary btn-block" role="button">Volver al Menú Principal</a>
                     </div>

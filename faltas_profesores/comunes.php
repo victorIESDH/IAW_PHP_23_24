@@ -54,4 +54,29 @@ function fValidaSession (){
 		return 0;	
 	}
 }
+function DiaSemana()
+{
+	$dia = date("N");
+	switch ($dia) {
+		case 1:
+			$dia = "Lunes";
+			break;
+		case 2:
+			$dia = "Martes";
+			break;
+		case 3:
+			$dia = "Martes";
+			break;
+		case 4:
+			$dia = "Martes";
+			break;			
+		case 5:
+			$dia = "Martes";
+			break;
+		default:
+			$dia = "Fin de semana";
+			break;
+	}
+	return $dia;
+}
 ?>
