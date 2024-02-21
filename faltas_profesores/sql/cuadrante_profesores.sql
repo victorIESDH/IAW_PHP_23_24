@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 20-02-2024 a las 11:25:41
--- Versión del servidor: 10.8.8-MariaDB-1:10.8.8+maria~ubu2204
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 21-02-2024 a las 16:33:01
+-- Versión del servidor: 8.0.34-0ubuntu0.22.04.1
+-- Versión de PHP: 8.1.2-1ubuntu2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,53 +28,112 @@ USE `cuadrante_profesores`;
 --
 -- Estructura de tabla para la tabla `FALTAS`
 --
-
 DROP TABLE IF EXISTS `FALTAS`;
 CREATE TABLE `FALTAS` (
-  `CODIGO` int(3) NOT NULL,
-  `PROFESOR` int(3) DEFAULT NULL,
+  `CODIGO` int NOT NULL,
+  `PROFESOR` int DEFAULT NULL,
   `FECHA` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `FALTAS`
+--
+
+INSERT INTO `FALTAS` (`CODIGO`, `PROFESOR`, `FECHA`) VALUES
+(1, 1, '2024-02-20'),
+(2, 4, '2024-02-22'),
+(4, 3, '2024-03-01'),
+(6, 5, '2024-02-20');
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `HORARIO`
 --
-
 DROP TABLE IF EXISTS `HORARIO`;
 CREATE TABLE `HORARIO` (
-  `PROFESOR` int(3) NOT NULL,
-  `DIA` varchar(10) NOT NULL,
-  `HORA` int(1) NOT NULL,
-  `GRUPO` varchar(10) NOT NULL,
-  `AULA` varchar(20) NOT NULL
+  `PROFESOR` int NOT NULL,
+  `DIA` varchar(10) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `HORA` int NOT NULL,
+  `GRUPO` varchar(10) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `AULA` varchar(20) COLLATE utf8mb3_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `HORARIO`
+--
+
+INSERT INTO `HORARIO` (`PROFESOR`, `DIA`, `HORA`, `GRUPO`, `AULA`) VALUES
+(1, 'Jueves', 1, '1 SMR', 'INF 1.9'),
+(1, 'Jueves', 2, '1 SMR', 'INF 1.9'),
+(1, 'Jueves', 3, '2 ASIR', 'INF 3'),
+(1, 'Jueves', 4, '2 ASIR', 'INF 3'),
+(1, 'Lunes', 1, '2 ASIR', 'INF 3'),
+(1, 'Lunes', 2, '2 ASIR', 'INF 3'),
+(1, 'Lunes', 5, '1 SMR', 'INF 1.9'),
+(1, 'Lunes', 6, '1 SMR', 'INF 1.9'),
+(1, 'Martes', 2, '2 ASIR', 'INF 3'),
+(1, 'Martes', 5, '2 ASIR', 'INF 3'),
+(1, 'Miércoles', 1, '1 SMR', 'INF 1.9'),
+(1, 'Miércoles', 2, '1 SMR', 'INF 1.9'),
+(1, 'Miércoles', 3, '2 ASIR', 'INF 3'),
+(1, 'Miércoles', 4, '2 ASIR', 'INF 3'),
+(1, 'Viernes', 2, '2 ASIR', 'INF 3'),
+(1, 'Viernes', 3, '2 ASIR', 'INF 3'),
+(1, 'Viernes', 4, '1 SMR', 'INF 1.9'),
+(1, 'Viernes', 5, '1 SMR', 'INF 1.9'),
+(5, 'Jueves', 1, '2 SMR', 'INF 2'),
+(5, 'Jueves', 2, '2 SMR', 'INF 2'),
+(5, 'Jueves', 3, '1 ASIR', 'INF 3'),
+(5, 'Jueves', 4, '1 ASIR', 'INF 3'),
+(5, 'Lunes', 5, '1 ASIR', 'INF 3'),
+(5, 'Lunes', 6, '1 ASIR', 'INF 3'),
+(5, 'Martes', 3, '1 ASIR', 'INF 3'),
+(5, 'Martes', 4, '1 ASIR', 'INF 3'),
+(5, 'Miércoles', 1, '2 ASIR', 'INF 4'),
+(5, 'Miércoles', 2, '2 ASIR', 'INF 4'),
+(5, 'Miércoles', 5, '1 ASIR', 'INF 3'),
+(5, 'Miércoles', 6, '1 ASIR', 'INF 3'),
+(5, 'Viernes', 1, '2 SMR', 'INF 2'),
+(5, 'Viernes', 2, '2 SMR', 'INF 2'),
+(5, 'Viernes', 4, '2 SMR', 'INF 2'),
+(5, 'Viernes', 5, '1 ASIR', 'INF 3'),
+(5, 'Viernes', 6, '1 ASIR', 'INF 3');
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `PROFESORES`
 --
-
 DROP TABLE IF EXISTS `PROFESORES`;
 CREATE TABLE `PROFESORES` (
-  `CODIGO` int(3) NOT NULL,
-  `NOMBRE` varchar(50) DEFAULT NULL
+  `CODIGO` int NOT NULL,
+  `NOMBRE` varchar(50) COLLATE utf8mb3_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `PROFESORES`
+--
+
+INSERT INTO `PROFESORES` (`CODIGO`, `NOMBRE`) VALUES
+(1, 'Javier'),
+(2, 'Víctor'),
+(3, 'Jesús'),
+(4, 'Álvaro'),
+(5, 'Diego'),
+(6, 'Mariola');
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `USUARIOS`
 --
-
 DROP TABLE IF EXISTS `USUARIOS`;
 CREATE TABLE `USUARIOS` (
-  `CODIGO` int(3) NOT NULL,
-  `NOMBRE` varchar(30) NOT NULL,
-  `PASSWORD` varchar(30) NOT NULL,
-  `PERFIL` varchar(20) DEFAULT NULL
+  `CODIGO` int NOT NULL,
+  `NOMBRE` varchar(30) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `PASSWORD` varchar(30) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `PERFIL` varchar(20) COLLATE utf8mb3_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
@@ -82,7 +141,8 @@ CREATE TABLE `USUARIOS` (
 --
 
 INSERT INTO `USUARIOS` (`CODIGO`, `NOMBRE`, `PASSWORD`, `PERFIL`) VALUES
-(1, 'usuario', 'usuario', 'director');
+(1, 'usuario', 'usuario', 'direccion'),
+(2, 'profesor', 'profesor', 'profesor');
 
 --
 -- Índices para tablas volcadas
@@ -121,19 +181,19 @@ ALTER TABLE `USUARIOS`
 -- AUTO_INCREMENT de la tabla `FALTAS`
 --
 ALTER TABLE `FALTAS`
-  MODIFY `CODIGO` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `CODIGO` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `PROFESORES`
 --
 ALTER TABLE `PROFESORES`
-  MODIFY `CODIGO` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `CODIGO` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `USUARIOS`
 --
 ALTER TABLE `USUARIOS`
-  MODIFY `CODIGO` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `CODIGO` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
